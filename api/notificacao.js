@@ -14,7 +14,6 @@ export default async function handler(request, response) {
     return;
   }
 
-  // Acessa o ID da notificação tanto do corpo da requisição quanto dos parâmetros da URL
   const { id } = request.body.data || request.query;
 
   if (!id) {
@@ -40,7 +39,7 @@ export default async function handler(request, response) {
     const emailComprador = pagamento.payer.email || 'email@nao-informado.com';
     const planoAdquirido = (pagamento.additional_info.items && pagamento.additional_info.items.length > 0) ? pagamento.additional_info.items[0].title : 'Plano não informado';
 
-    // Envia e-mail de notificação para você
+    // 1. Envia e-mail de notificação para você
     let emailParaVoce = new SibApiV3Sdk.SendSmtpEmail();
     emailParaVoce.sender = { email: meuEmail };
     emailParaVoce.to = [{ email: meuEmail }];
@@ -55,7 +54,7 @@ export default async function handler(request, response) {
     
     await apiInstance.sendTransacEmail(emailParaVoce);
 
-    // Envia e-mail de confirmação para o comprador
+    // 2. Envia e-mail de confirmação para o comprador
     let emailParaCliente = new SibApiV3Sdk.SendSmtpEmail();
     emailParaCliente.sender = { email: meuEmail };
     emailParaCliente.to = [{ email: emailComprador }];
