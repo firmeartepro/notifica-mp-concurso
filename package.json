@@ -1,0 +1,13 @@
+{
+  "name": "notificacao-mp",
+  "version": "1.0.0",
+  "description": "Função serverless para notificar pagamentos do Mercado Pago.",
+  "main": "api/notificacao.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "axios": "^1.4.0"
+  }
+}
