@@ -6,6 +6,7 @@ const apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = process.env.BREVO_API_KEY;
 
 const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+const meuEmail = process.env.MEU_EMAIL_CONTATO;
 
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
@@ -40,8 +41,8 @@ export default async function handler(request, response) {
 
     // 1. Envia e-mail de notificação para você
     let emailParaVoce = new SibApiV3Sdk.SendSmtpEmail();
-    emailParaVoce.sender = { email: 'concursoturboia' };
-    emailParaVoce.to = [{ email: 'concursoturboia' }];
+    emailParaVoce.sender = { email: meuEmail };
+    emailParaVoce.to = [{ email: meuEmail }];
     emailParaVoce.subject = `Nova Venda de Preparatório - ${planoAdquirido}`;
     emailParaVoce.htmlContent = `
       <p>Olá, uma nova venda foi realizada com sucesso!</p>
@@ -55,7 +56,7 @@ export default async function handler(request, response) {
 
     // 2. Envia e-mail de confirmação para o comprador
     let emailParaCliente = new SibApiV3Sdk.SendSmtpEmail();
-    emailParaCliente.sender = { email: 'concursoturboia@gmail.com' };
+    emailParaCliente.sender = { email: meuEmail };
     emailParaCliente.to = [{ email: emailComprador }];
     emailParaCliente.subject = `Confirmação de Compra - ${planoAdquirido}`;
     emailParaCliente.htmlContent = `
