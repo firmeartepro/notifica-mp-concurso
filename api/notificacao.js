@@ -1,5 +1,5 @@
 const axios = require('axios');
-const SibApiV3Sdk = require('@brevo.io/sib-api-v3-sdk');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKey = defaultClient.authentications['api-key'];
@@ -35,7 +35,7 @@ export default async function handler(request, response) {
       return;
     }
 
-    const nomeComprador = pagamento.payer.first_name ? `${pagamento.payer.first_name} ${pagament.payer.last_name}` : 'Comprador não informado';
+    const nomeComprador = pagamento.payer.first_name ? `${pagamento.payer.first_name} ${pagamento.payer.last_name}` : 'Comprador não informado';
     const emailComprador = pagamento.payer.email || 'email@nao-informado.com';
     const planoAdquirido = (pagamento.additional_info.items && pagamento.additional_info.items.length > 0) ? pagamento.additional_info.items[0].title : 'Plano não informado';
 
