@@ -35,9 +35,11 @@ export default async function handler(request, response) {
       return;
     }
 
-    const nomeComprador = pagamento.payer.first_name ? `${pagamento.payer.first_name} ${pagamento.payer.last_name}` : 'Comprador não informado';
-    const emailComprador = pagamento.payer.email || 'email@nao-informado.com';
-    const planoAdquirido = (pagamento.additional_info.items && pagamento.additional_info.items.length > 0) ? pagamento.additional_info.items[0].title : 'Plano não informado';
+    // Corrigindo a verificação e extração dos dados
+    const payer = pagamento.payer;
+    const nomeComprador = payer && payer.first_name ? `${payer.first_name} ${payer.last_name}` : 'Comprador não informado';
+    const emailComprador = payer && payer.email ? payer.email : 'email@nao-informado.com';
+    const planoAdquirido = (pagamento.additional_info && pagamento.additional_info.items && pagamento.additional_info.items.length > 0) ? pagamento.additional_info.items[0].title : 'Plano não informado';
 
     // 1. Envia e-mail de notificação para você
     let emailParaVoce = new SibApiV3Sdk.SendSmtpEmail();
